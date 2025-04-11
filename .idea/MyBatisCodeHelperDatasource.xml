@@ -7,11 +7,11 @@
         <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
         <option name="controllerTemplateString" value="&#10;#* @vtlvariable name=&quot;tableName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;entityPackageName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;entityClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;servicePackageName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;serviceInterfacePackage&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;serviceClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;serviceInterfaceClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;mapperPackageName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;mapperClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;controllerPackage&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;tableRemark&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;myDate&quot; type=&quot;java.util.Date&quot; *#&#10;#* @vtlvariable name=&quot;simpleDateFormat&quot; type=&quot;java.text.SimpleDateFormat&quot; *#&#10;package $!{controllerPackage};&#10;import $!{entityPackageName}.$!{entityClassName};&#10;###set($realServiceName = $!{serviceClassName}+'Impl')&#10;import $!{servicePackageName}.$!{serviceClassName};&#10;import org.springframework.web.bind.annotation.*;&#10;&#10;#set($serviceFirstLower = $!{serviceClassName.substring(0,1).toLowerCase()}+$!{serviceClassName.substring(1,$!{serviceClassName.length()})})&#10;import org.springframework.beans.factory.annotation.Autowired;&#10;&#10;/**&#10;* $!{tableRemark}($!{tableName})表控制层&#10;*&#10;* @author xxxxx&#10;*/&#10;@RestController&#10;@RequestMapping(&quot;/$!{tableName}&quot;)&#10;public class $!{entityClassName}Controller {&#10;/**&#10;* 服务对象&#10;*/&#10;    @Autowired&#10;    private $!{serviceClassName} $!{serviceFirstLower};&#10;&#10;    /**&#10;    * 通过主键查询单条数据&#10;    *&#10;    * @param id 主键&#10;    * @return 单条数据&#10;    */&#10;    @GetMapping(&quot;selectOne&quot;)&#10;    public $!{entityClassName} selectOne(Integer id) {&#10;    return $!{serviceFirstLower}.selectByPrimaryKey(id);&#10;    }&#10;&#10;}" />
         <option name="insertOnDuplicateKey" value="true" />
-        <option name="javaMapperPackage" value="com.geshu.pts.dao.inter" />
-        <option name="javaMapperPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
-        <option name="javaModelPackage" value="com.geshu.pts.dao.dto" />
-        <option name="javaModelPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
-        <option name="lastDatabaseCrudChooseModuleName" value="police_test_system" />
+        <option name="javaMapperPackage" value="com.xiao.dao.inter" />
+        <option name="javaMapperPath" value="$PROJECT_DIR$/src/main/java" />
+        <option name="javaModelPackage" value="com.xiao.dao.dto" />
+        <option name="javaModelPath" value="$PROJECT_DIR$/src/main/java" />
+        <option name="lastDatabaseCrudChooseModuleName" value="spring-security-demo" />
         <option name="lombokDataAnnotation" value="true" />
         <option name="mapperAnnotaion" value="true" />
         <option name="moduleNameToPackageAndPathMap">
@@ -27,6 +27,20 @@
                   <option name="javaServicePath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
                   <option name="xmlPackage" value="com.geshu.pts.dao.mapper" />
                   <option name="xmlPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+            <entry key="spring-security-demo">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.xiao.dao.inter" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/src/main/java" />
+                  <option name="javaModelPacakge" value="com.xiao.dao.dto" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/src/main/java" />
+                  <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/src/main/java" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/src/main/java" />
+                  <option name="xmlPackage" value="com.xiao.dao.mapper" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/src/main/java" />
                 </UserPackageAndPathInfoByModule>
               </value>
             </entry>
@@ -1094,12 +1108,287 @@
                 </TableGenerateConfig>
               </value>
             </entry>
+            <entry key="spring_security_demo:permission">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="permission_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="content" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="type" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="remark" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="Permission" />
+                  <option name="moduleName" value="spring-security-demo" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="spring_security_demo:role">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="role_code" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="role_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="Role" />
+                  <option name="moduleName" value="spring-security-demo" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="spring_security_demo:role_permission">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="role_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="permission_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="RolePermission" />
+                  <option name="moduleName" value="spring-security-demo" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="spring_security_demo:user">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="username" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="password" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="police_id" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="real_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="position" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id_card" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="gender" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="phone" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="email" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="avatar" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="enable" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="last_login_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="is_deleted" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="token" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="User" />
+                  <option name="moduleName" value="spring-security-demo" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="spring_security_demo:user_role">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="role_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_by" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="UserRole" />
+                  <option name="moduleName" value="spring-security-demo" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
           </map>
         </option>
         <option name="updateBatch" value="true" />
         <option name="useOpenApi" value="true" />
-        <option name="xmlMapperPackage" value="com.geshu.pts.dao.mapper" />
-        <option name="xmlMapperPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+        <option name="xmlMapperPackage" value="com.xiao.dao.mapper" />
+        <option name="xmlMapperPath" value="$PROJECT_DIR$/src/main/java" />
       </ProjectProfile>
     </option>
   </component>
