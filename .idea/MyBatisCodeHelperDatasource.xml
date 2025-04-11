@@ -1,0 +1,1106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MyBatisCodeHelperDatasource">
+    <option name="projectProfile">
+      <ProjectProfile>
+        <option name="batchInsert" value="true" />
+        <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+        <option name="controllerTemplateString" value="&#10;#* @vtlvariable name=&quot;tableName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;entityPackageName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;entityClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;servicePackageName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;serviceInterfacePackage&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;serviceClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;serviceInterfaceClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;mapperPackageName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;mapperClassName&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;controllerPackage&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;tableRemark&quot; type=&quot;java.lang.String&quot; *#&#10;#* @vtlvariable name=&quot;myDate&quot; type=&quot;java.util.Date&quot; *#&#10;#* @vtlvariable name=&quot;simpleDateFormat&quot; type=&quot;java.text.SimpleDateFormat&quot; *#&#10;package $!{controllerPackage};&#10;import $!{entityPackageName}.$!{entityClassName};&#10;###set($realServiceName = $!{serviceClassName}+'Impl')&#10;import $!{servicePackageName}.$!{serviceClassName};&#10;import org.springframework.web.bind.annotation.*;&#10;&#10;#set($serviceFirstLower = $!{serviceClassName.substring(0,1).toLowerCase()}+$!{serviceClassName.substring(1,$!{serviceClassName.length()})})&#10;import org.springframework.beans.factory.annotation.Autowired;&#10;&#10;/**&#10;* $!{tableRemark}($!{tableName})表控制层&#10;*&#10;* @author xxxxx&#10;*/&#10;@RestController&#10;@RequestMapping(&quot;/$!{tableName}&quot;)&#10;public class $!{entityClassName}Controller {&#10;/**&#10;* 服务对象&#10;*/&#10;    @Autowired&#10;    private $!{serviceClassName} $!{serviceFirstLower};&#10;&#10;    /**&#10;    * 通过主键查询单条数据&#10;    *&#10;    * @param id 主键&#10;    * @return 单条数据&#10;    */&#10;    @GetMapping(&quot;selectOne&quot;)&#10;    public $!{entityClassName} selectOne(Integer id) {&#10;    return $!{serviceFirstLower}.selectByPrimaryKey(id);&#10;    }&#10;&#10;}" />
+        <option name="insertOnDuplicateKey" value="true" />
+        <option name="javaMapperPackage" value="com.geshu.pts.dao.inter" />
+        <option name="javaMapperPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+        <option name="javaModelPackage" value="com.geshu.pts.dao.dto" />
+        <option name="javaModelPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+        <option name="lastDatabaseCrudChooseModuleName" value="police_test_system" />
+        <option name="lombokDataAnnotation" value="true" />
+        <option name="mapperAnnotaion" value="true" />
+        <option name="moduleNameToPackageAndPathMap">
+          <map>
+            <entry key="police_test_system">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.geshu.pts.dao.inter" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+                  <option name="javaModelPacakge" value="com.geshu.pts.dao.dto" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+                  <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+                  <option name="xmlPackage" value="com.geshu.pts.dao.mapper" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="mybatisPlusIdType" value="AUTO" />
+        <option name="notifyDialect" value="false" />
+        <option name="tableGenerateConfigs">
+          <map>
+            <entry key="police_test_system:message">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="type" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="mobiles" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="mobiles_num" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="content" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="Message" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_exam">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="team_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="start_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="end_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsExam" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_label">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="is_default" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsLabel" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_message">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="type" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="mobiles" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="mobiles_num" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="send_user" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="content" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsMessage" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_permission">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="permission_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="content" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="type" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="remark" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsPermission" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_question">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="title" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="description" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="files" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="is_delete" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="sort" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsQuestion" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_question_submission">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="question_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="team_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="answer" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="files" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="status" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="submit_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="ip_address" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="is_commit" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsQuestionSubmission" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_role">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="role_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="role_code" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="role_enable" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="remark" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsRole" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_role_permission">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="rid" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="pid" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsRolePermission" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_sys_login_log">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_no" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="login_ip" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="status" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="remark" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="login_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_agent" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsSysLoginLog" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_sys_operation_log">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_no" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="operation_title" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="operation_ip" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="operation_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="operation_url" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="operation_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="operation_status" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="operation_param" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="remark" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_agent" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsSysOperationLog" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_system_config">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="config" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsSystemConfig" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_team">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="leader_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="logo" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="is_exam" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="exam_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="group_photo" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="leader_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="is_delete" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsTeam" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_test">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="description" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="is_deleted" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsTest" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_unit">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_no" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_address" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_num" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_parent_unit_no" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="type" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsUnit" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_used_question">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="title" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="description" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="files" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="team_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="exam_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="sort" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="start_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="end_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="status" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsUsedQuestion" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_user">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="token" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_no" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_phone" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_unit_no" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_enable" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="password" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="login_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="is_deleted" />
+                        <option name="javaType" value="java.lang.Boolean" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="team_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="unit_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsUser" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:pts_user_role">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="role_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_date" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="update_user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="PtsUserRole" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="police_test_system:team">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="name" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="leader_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="images" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="Team" />
+                  <option name="moduleName" value="police_test_system" />
+                  <option name="mybatisplusIdType" value="INPUT" />
+                  <option name="updateBatch" value="true" />
+                  <option name="updateBatchSelective" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="updateBatch" value="true" />
+        <option name="useOpenApi" value="true" />
+        <option name="xmlMapperPackage" value="com.geshu.pts.dao.mapper" />
+        <option name="xmlMapperPath" value="$PROJECT_DIR$/../police_test_system/src/main/java" />
+      </ProjectProfile>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.dao.inter.UserMapper">
+  <resultMap id="BaseResultMap" type="com.xiao.dao.dto.User">
+    <!--@mbg.generated-->
+    <!--@Table spring_security_demo.`user`-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_no" jdbcType="VARCHAR" property="userNo" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="user_unit_no" jdbcType="VARCHAR" property="userUnitNo" />
+    <result column="user_enable" jdbcType="BOOLEAN" property="userEnable" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
+    <result column="team_id" jdbcType="BIGINT" property="teamId" />
+    <result column="unit_id" jdbcType="BIGINT" property="unitId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_no, user_name, user_phone, user_unit_no, user_enable, `password`, role_id, 
+    create_date, update_date, create_user_id, update_user_id, login_time, is_deleted, 
+    team_id, unit_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from spring_security_demo.`user`
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from spring_security_demo.`user`
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xiao.dao.dto.User" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into spring_security_demo.`user` (user_no, user_name, user_phone, 
+      user_unit_no, user_enable, `password`, 
+      role_id, create_date, update_date, 
+      create_user_id, update_user_id, login_time, 
+      is_deleted, team_id, unit_id
+      )
+    values (#{userNo,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
+      #{userUnitNo,jdbcType=VARCHAR}, #{userEnable,jdbcType=BOOLEAN}, #{password,jdbcType=VARCHAR}, 
+      #{roleId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=BIGINT}, #{updateUserId,jdbcType=BIGINT}, #{loginTime,jdbcType=TIMESTAMP}, 
+      #{isDeleted,jdbcType=BOOLEAN}, #{teamId,jdbcType=BIGINT}, #{unitId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xiao.dao.dto.User" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into spring_security_demo.`user`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userNo != null and userNo != ''">
+        user_no,
+      </if>
+      <if test="userName != null and userName != ''">
+        user_name,
+      </if>
+      <if test="userPhone != null and userPhone != ''">
+        user_phone,
+      </if>
+      <if test="userUnitNo != null and userUnitNo != ''">
+        user_unit_no,
+      </if>
+      <if test="userEnable != null">
+        user_enable,
+      </if>
+      <if test="password != null and password != ''">
+        `password`,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="teamId != null">
+        team_id,
+      </if>
+      <if test="unitId != null">
+        unit_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userNo != null and userNo != ''">
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null and userName != ''">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null and userPhone != ''">
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userUnitNo != null and userUnitNo != ''">
+        #{userUnitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userEnable != null">
+        #{userEnable,jdbcType=BOOLEAN},
+      </if>
+      <if test="password != null and password != ''">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BOOLEAN},
+      </if>
+      <if test="teamId != null">
+        #{teamId,jdbcType=BIGINT},
+      </if>
+      <if test="unitId != null">
+        #{unitId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiao.dao.dto.User">
+    <!--@mbg.generated-->
+    update spring_security_demo.`user`
+    <set>
+      <if test="userNo != null and userNo != ''">
+        user_no = #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null and userName != ''">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null and userPhone != ''">
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userUnitNo != null and userUnitNo != ''">
+        user_unit_no = #{userUnitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userEnable != null">
+        user_enable = #{userEnable,jdbcType=BOOLEAN},
+      </if>
+      <if test="password != null and password != ''">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BOOLEAN},
+      </if>
+      <if test="teamId != null">
+        team_id = #{teamId,jdbcType=BIGINT},
+      </if>
+      <if test="unitId != null">
+        unit_id = #{unitId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiao.dao.dto.User">
+    <!--@mbg.generated-->
+    update spring_security_demo.`user`
+    set user_no = #{userNo,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_unit_no = #{userUnitNo,jdbcType=VARCHAR},
+      user_enable = #{userEnable,jdbcType=BOOLEAN},
+      `password` = #{password,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      update_user_id = #{updateUserId,jdbcType=BIGINT},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BOOLEAN},
+      team_id = #{teamId,jdbcType=BIGINT},
+      unit_id = #{unitId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
