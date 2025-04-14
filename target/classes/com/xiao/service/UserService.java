@@ -8,4 +8,6 @@ public interface UserService {
     AjaxResult<String> geneCode(String phone);
 
     AjaxResult<String> login(ReqLogin req);
+
+    AjaxResult<String> logout();
 }

@@ -1,19 +1,12 @@
 package com.xiao.utils;
 
 import com.xiao.common.dto.UserDto;
-import com.xiao.dao.dto.User;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Component;
+import io.jsonwebtoken.*;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * JWT工具类
- */
-@Component
 public class JwtUtil {
 
     /**
@@ -27,13 +20,8 @@ public class JwtUtil {
      * @param user 用户对象
      * @return token字符串
      */
-    public String generateToken(UserDto user) {
+    public static String geneToken(UserDto user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", user.getId());
-        claims.put("username", user.getUsername());
-        claims.put("policeId", user.getPoliceId());
-        claims.put("realName", user.getRealName());
-        claims.put("unitId", user.getUnitId());
         claims.put("token", user.getToken());
         return Jwts.builder()
                 .setClaims(claims)
@@ -42,5 +30,23 @@ public class JwtUtil {
                 // 移除了setExpiration行，使token永久有效
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
+    }
+
+    public static UserDto parseToken(String authorization) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(authorization)
+                    .getBody();
+
+            UserDto user = new UserDto();
+            user.setToken(claims.get("token", String.class));
+
+            return user;
+        } catch (Exception e) {
+            // 可以记录异常日志
+            // logger.error("Token解析失败", e);
+            return null;
+        }
     }
 }

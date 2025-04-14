@@ -16,11 +16,14 @@ import com.xiao.service.UserService;
 import com.xiao.utils.JwtUtil;
 import com.xiao.utils.MyUtil;
 import com.xiao.utils.RedisUtil;
+import com.xiao.utils.SecurityUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -44,9 +47,6 @@ public class UserServiceImpl implements UserService {
     @Resource
     PermissionMapper permissionMapper;
 
-    @Resource
-    JwtUtil jwtUtil;
-
     @Override
     public AjaxResult<String> geneCode(String phone) {
         List<User> users = userMapper.selectByPhoneAndIsDeleted(phone, false);
@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AjaxResult<String> login(ReqLogin req) {
+        Date now = new Date();
         int type = Integer.parseInt(req.getType());
         String phone = req.getPhone();
         String code = req.getCode();
@@ -68,9 +69,11 @@ public class UserServiceImpl implements UserService {
             return AjaxResult.error("用户不存在!");
         User user = users.get(0);
         Long userId = user.getId();
-        if (type == 1 && !code.equals(user.getPassword())) { // 密码登录
+        if (!user.getEnable())
+            return AjaxResult.error("用户未启用!");
+        if (type == 1 && !code.equals(user.getPassword())) // 密码登录
             return AjaxResult.error("密码错误!");
-        } else if (type == 2) {
+        else if (type == 2) {
             String key = RedisPrefix.LOGIN_CODE + phone;
             if (!redisUtil.contains(key))
                 return AjaxResult.error("验证码已失效!");
@@ -100,10 +103,24 @@ public class UserServiceImpl implements UserService {
         userDto.setRoleDto(roleDto);
         String token = IdUtil.randomUUID();
         userDto.setToken(token);
-        // 3.生成token   authorization->token->UserDto
-        String authorization = jwtUtil.generateToken(userDto);
+        // 3.更新数据库user token和登录时间
+        user.setToken(token);
+        user.setLastLoginTime(now);
+        userMapper.updateByPrimaryKeySelective(user);
+        // 4.生成token   authorization->token->UserDto
+        String authorization = JwtUtil.geneToken(userDto);
         String key = RedisPrefix.LOGIN_TOKEN + token;
         redisUtil.set(key, userDto);
+        // 5.设置UserDto到security上下文
+        SecurityUtil.setUser(userDto);
         return AjaxResult.success(authorization);
+    }
+
+    @Override
+    public AjaxResult<String> logout() {
+        String token = SecurityUtil.getToken();
+        String key = RedisPrefix.LOGIN_TOKEN + token;
+        redisUtil.del(key);
+        return AjaxResult.success("登出成功!");
     }
 }
