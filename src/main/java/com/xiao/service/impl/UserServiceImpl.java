@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -108,7 +107,7 @@ public class UserServiceImpl implements UserService {
         user.setLastLoginTime(now);
         userMapper.updateByPrimaryKeySelective(user);
         // 4.生成token   authorization->token->UserDto
-        String authorization = JwtUtil.geneToken(userDto);
+        String authorization = JwtUtil.geneAuth(userDto);
         String key = RedisPrefix.LOGIN_TOKEN + token;
         redisUtil.set(key, userDto);
         // 5.设置UserDto到security上下文

@@ -2,10 +2,12 @@ package com.xiao.utils;
 
 import com.xiao.common.dto.UserDto;
 import io.jsonwebtoken.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class JwtUtil {
 
@@ -20,7 +22,7 @@ public class JwtUtil {
      * @param user 用户对象
      * @return token字符串
      */
-    public static String geneToken(UserDto user) {
+    public static String geneAuth(UserDto user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("token", user.getToken());
         return Jwts.builder()
@@ -32,7 +34,8 @@ public class JwtUtil {
                 .compact();
     }
 
-    public static UserDto parseToken(String authorization) {
+    // 解析jwt
+    public static UserDto parseAuth(String authorization) {
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(SECRET_KEY)

@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             // 2.解析校验token
-            UserDto userDto = JwtUtil.parseToken(authorization);
+            UserDto userDto = JwtUtil.parseAuth(authorization);
             assert userDto != null;
             String token = userDto.getToken();
             String key = RedisPrefix.LOGIN_TOKEN + token;

@@ -31,19 +31,21 @@ public class SecurityUtil {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
+    // 清空当前登录用户 上下文
+    public static void clear() {
+        SecurityContextHolder.clearContext();
+    }
+
     /**
      * 获取当前登录用户
      * @return 当前用户，如果未登录则返回null
      */
     public static UserDto getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() &&
-                !(authentication.getPrincipal() instanceof String)) {
-            return (UserDto) authentication.getPrincipal();
-        }
-        return null;
+        return (UserDto) authentication.getPrincipal();
     }
 
+    // 获取token
     public static String getToken() {
         UserDto user = getUser();
         if (user == null)
