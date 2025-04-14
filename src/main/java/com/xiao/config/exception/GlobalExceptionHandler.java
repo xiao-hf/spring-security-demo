@@ -132,7 +132,7 @@ public class GlobalExceptionHandler {
         log.error("数据库访问异常：", e);
         return AjaxResult.error("数据库操作失败");
     }
-
+    
     // SQL异常
     @ExceptionHandler(SQLException.class)
     public AjaxResult<String> handleSQLException(SQLException e) {
