@@ -1,8 +1,8 @@
 package com.xiao.controller;
 
 import com.xiao.common.AjaxResult;
+import com.xiao.common.annotation.Log;
 import com.xiao.common.dto.UserDto;
-import com.xiao.exception.BusinessException;
 import com.xiao.http.req.ReqLogin;
 import com.xiao.service.UserService;
 import com.xiao.utils.SecurityUtil;
@@ -21,6 +21,7 @@ public class UserController {
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
+    @Log(module = "测试", type = Log.OperationType.OTHER, saveParams = true, saveResult = true)
     public AjaxResult<String> admin() {
         return AjaxResult.success("ADMIN认证成功!");
     }

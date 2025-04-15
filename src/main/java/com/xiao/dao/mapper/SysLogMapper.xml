@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.dao.inter.SysLogMapper">
+  <resultMap id="BaseResultMap" type="com.xiao.dao.dto.SysLog">
+    <!--@mbg.generated-->
+    <!--@Table sys_log-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="module" jdbcType="VARCHAR" property="module" />
+    <result column="operation_type" jdbcType="VARCHAR" property="operationType" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="request_url" jdbcType="VARCHAR" property="requestUrl" />
+    <result column="request_method" jdbcType="VARCHAR" property="requestMethod" />
+    <result column="request_params" jdbcType="LONGVARCHAR" property="requestParams" />
+    <result column="response_result" jdbcType="LONGVARCHAR" property="responseResult" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="error_msg" jdbcType="LONGVARCHAR" property="errorMsg" />
+    <result column="operation_time" jdbcType="TIMESTAMP" property="operationTime" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
+    <result column="os" jdbcType="VARCHAR" property="os" />
+    <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `module`, operation_type, description, `method`, request_url, request_method, 
+    request_params, response_result, `status`, error_msg, operation_time, user_id, username, 
+    ip, browser, os, `time`, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sys_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from sys_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xiao.dao.dto.SysLog" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_log (`module`, operation_type, description, 
+      `method`, request_url, request_method, 
+      request_params, response_result, 
+      `status`, error_msg, operation_time, 
+      user_id, username, ip, 
+      browser, os, `time`, create_time
+      )
+    values (#{module,jdbcType=VARCHAR}, #{operationType,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{method,jdbcType=VARCHAR}, #{requestUrl,jdbcType=VARCHAR}, #{requestMethod,jdbcType=VARCHAR}, 
+      #{requestParams,jdbcType=LONGVARCHAR}, #{responseResult,jdbcType=LONGVARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{errorMsg,jdbcType=LONGVARCHAR}, #{operationTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{browser,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xiao.dao.dto.SysLog" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="module != null and module != ''">
+        `module`,
+      </if>
+      <if test="operationType != null and operationType != ''">
+        operation_type,
+      </if>
+      <if test="description != null and description != ''">
+        description,
+      </if>
+      <if test="method != null and method != ''">
+        `method`,
+      </if>
+      <if test="requestUrl != null and requestUrl != ''">
+        request_url,
+      </if>
+      <if test="requestMethod != null and requestMethod != ''">
+        request_method,
+      </if>
+      <if test="requestParams != null and requestParams != ''">
+        request_params,
+      </if>
+      <if test="responseResult != null and responseResult != ''">
+        response_result,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="errorMsg != null and errorMsg != ''">
+        error_msg,
+      </if>
+      <if test="operationTime != null">
+        operation_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="username != null and username != ''">
+        username,
+      </if>
+      <if test="ip != null and ip != ''">
+        ip,
+      </if>
+      <if test="browser != null and browser != ''">
+        browser,
+      </if>
+      <if test="os != null and os != ''">
+        os,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="module != null and module != ''">
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null and operationType != ''">
+        #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null and description != ''">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null and method != ''">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUrl != null and requestUrl != ''">
+        #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null and requestMethod != ''">
+        #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParams != null and requestParams != ''">
+        #{requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseResult != null and responseResult != ''">
+        #{responseResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="errorMsg != null and errorMsg != ''">
+        #{errorMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="operationTime != null">
+        #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null and username != ''">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null and ip != ''">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null and browser != ''">
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null and os != ''">
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiao.dao.dto.SysLog">
+    <!--@mbg.generated-->
+    update sys_log
+    <set>
+      <if test="module != null and module != ''">
+        `module` = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null and operationType != ''">
+        operation_type = #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null and description != ''">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null and method != ''">
+        `method` = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUrl != null and requestUrl != ''">
+        request_url = #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null and requestMethod != ''">
+        request_method = #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParams != null and requestParams != ''">
+        request_params = #{requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseResult != null and responseResult != ''">
+        response_result = #{responseResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="errorMsg != null and errorMsg != ''">
+        error_msg = #{errorMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="operationTime != null">
+        operation_time = #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null and username != ''">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null and ip != ''">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null and browser != ''">
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null and os != ''">
+        os = #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiao.dao.dto.SysLog">
+    <!--@mbg.generated-->
+    update sys_log
+    set `module` = #{module,jdbcType=VARCHAR},
+      operation_type = #{operationType,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      `method` = #{method,jdbcType=VARCHAR},
+      request_url = #{requestUrl,jdbcType=VARCHAR},
+      request_method = #{requestMethod,jdbcType=VARCHAR},
+      request_params = #{requestParams,jdbcType=LONGVARCHAR},
+      response_result = #{responseResult,jdbcType=LONGVARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      error_msg = #{errorMsg,jdbcType=LONGVARCHAR},
+      operation_time = #{operationTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+      username = #{username,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      `time` = #{time,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update sys_log
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`module` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.module,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="operation_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.operationType,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.description,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`method` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.method,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="request_url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.requestUrl,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="request_method = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.requestMethod,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="request_params = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.requestParams,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="response_result = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.responseResult,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.status,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="error_msg = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.errorMsg,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="operation_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.operationTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.userId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="username = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.username,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.ip,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="browser = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.browser,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="os = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.os,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`time` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.time,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_log
+    (`module`, operation_type, description, `method`, request_url, request_method, request_params, 
+      response_result, `status`, error_msg, operation_time, user_id, username, ip, browser, 
+      os, `time`, create_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.module,jdbcType=VARCHAR}, #{item.operationType,jdbcType=VARCHAR}, #{item.description,jdbcType=VARCHAR}, 
+        #{item.method,jdbcType=VARCHAR}, #{item.requestUrl,jdbcType=VARCHAR}, #{item.requestMethod,jdbcType=VARCHAR}, 
+        #{item.requestParams,jdbcType=LONGVARCHAR}, #{item.responseResult,jdbcType=LONGVARCHAR}, 
+        #{item.status,jdbcType=TINYINT}, #{item.errorMsg,jdbcType=LONGVARCHAR}, #{item.operationTime,jdbcType=TIMESTAMP}, 
+        #{item.userId,jdbcType=BIGINT}, #{item.username,jdbcType=VARCHAR}, #{item.ip,jdbcType=VARCHAR}, 
+        #{item.browser,jdbcType=VARCHAR}, #{item.os,jdbcType=VARCHAR}, #{item.time,jdbcType=BIGINT}, 
+        #{item.createTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <insert id="batchInsertSelectiveUseDefaultForNull" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_log
+    (`module`, operation_type, description, `method`, request_url, request_method, request_params, 
+      response_result, `status`, error_msg, operation_time, user_id, username, ip, browser, 
+      os, `time`, create_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      <choose>
+        <when test="item.module != null">
+          #{item.module,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.operationType != null">
+          #{item.operationType,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.description != null">
+          #{item.description,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.method != null">
+          #{item.method,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.requestUrl != null">
+          #{item.requestUrl,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.requestMethod != null">
+          #{item.requestMethod,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.requestParams != null">
+          #{item.requestParams,jdbcType=LONGVARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.responseResult != null">
+          #{item.responseResult,jdbcType=LONGVARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.status != null">
+          #{item.status,jdbcType=TINYINT},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.errorMsg != null">
+          #{item.errorMsg,jdbcType=LONGVARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.operationTime != null">
+          #{item.operationTime,jdbcType=TIMESTAMP},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.userId != null">
+          #{item.userId,jdbcType=BIGINT},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.username != null">
+          #{item.username,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.ip != null">
+          #{item.ip,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.browser != null">
+          #{item.browser,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.os != null">
+          #{item.os,jdbcType=VARCHAR},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.time != null">
+          #{item.time,jdbcType=BIGINT},
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT,
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="item.createTime != null">
+          #{item.createTime,jdbcType=TIMESTAMP}
+        </when>
+        <!--@ignoreSql-->
+        <otherwise>
+          DEFAULT
+        </otherwise>
+      </choose>
+      )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.xiao.dao.dto.SysLog" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `module`,
+      operation_type,
+      description,
+      `method`,
+      request_url,
+      request_method,
+      request_params,
+      response_result,
+      `status`,
+      error_msg,
+      operation_time,
+      user_id,
+      username,
+      ip,
+      browser,
+      os,
+      `time`,
+      create_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{module,jdbcType=VARCHAR},
+      #{operationType,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR},
+      #{method,jdbcType=VARCHAR},
+      #{requestUrl,jdbcType=VARCHAR},
+      #{requestMethod,jdbcType=VARCHAR},
+      #{requestParams,jdbcType=LONGVARCHAR},
+      #{responseResult,jdbcType=LONGVARCHAR},
+      #{status,jdbcType=TINYINT},
+      #{errorMsg,jdbcType=LONGVARCHAR},
+      #{operationTime,jdbcType=TIMESTAMP},
+      #{userId,jdbcType=BIGINT},
+      #{username,jdbcType=VARCHAR},
+      #{ip,jdbcType=VARCHAR},
+      #{browser,jdbcType=VARCHAR},
+      #{os,jdbcType=VARCHAR},
+      #{time,jdbcType=BIGINT},
+      #{createTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      `module` = #{module,jdbcType=VARCHAR},
+      operation_type = #{operationType,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      `method` = #{method,jdbcType=VARCHAR},
+      request_url = #{requestUrl,jdbcType=VARCHAR},
+      request_method = #{requestMethod,jdbcType=VARCHAR},
+      request_params = #{requestParams,jdbcType=LONGVARCHAR},
+      response_result = #{responseResult,jdbcType=LONGVARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      error_msg = #{errorMsg,jdbcType=LONGVARCHAR},
+      operation_time = #{operationTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+      username = #{username,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      `time` = #{time,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.xiao.dao.dto.SysLog" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sys_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="module != null and module != ''">
+        `module`,
+      </if>
+      <if test="operationType != null and operationType != ''">
+        operation_type,
+      </if>
+      <if test="description != null and description != ''">
+        description,
+      </if>
+      <if test="method != null and method != ''">
+        `method`,
+      </if>
+      <if test="requestUrl != null and requestUrl != ''">
+        request_url,
+      </if>
+      <if test="requestMethod != null and requestMethod != ''">
+        request_method,
+      </if>
+      <if test="requestParams != null and requestParams != ''">
+        request_params,
+      </if>
+      <if test="responseResult != null and responseResult != ''">
+        response_result,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="errorMsg != null and errorMsg != ''">
+        error_msg,
+      </if>
+      <if test="operationTime != null">
+        operation_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="username != null and username != ''">
+        username,
+      </if>
+      <if test="ip != null and ip != ''">
+        ip,
+      </if>
+      <if test="browser != null and browser != ''">
+        browser,
+      </if>
+      <if test="os != null and os != ''">
+        os,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="module != null and module != ''">
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null and operationType != ''">
+        #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null and description != ''">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null and method != ''">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUrl != null and requestUrl != ''">
+        #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null and requestMethod != ''">
+        #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParams != null and requestParams != ''">
+        #{requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseResult != null and responseResult != ''">
+        #{responseResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="errorMsg != null and errorMsg != ''">
+        #{errorMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="operationTime != null">
+        #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null and username != ''">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null and ip != ''">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null and browser != ''">
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null and os != ''">
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="module != null and module != ''">
+        `module` = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null and operationType != ''">
+        operation_type = #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null and description != ''">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null and method != ''">
+        `method` = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUrl != null and requestUrl != ''">
+        request_url = #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestMethod != null and requestMethod != ''">
+        request_method = #{requestMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParams != null and requestParams != ''">
+        request_params = #{requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseResult != null and responseResult != ''">
+        response_result = #{responseResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="errorMsg != null and errorMsg != ''">
+        error_msg = #{errorMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="operationTime != null">
+        operation_time = #{operationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null and username != ''">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null and ip != ''">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null and browser != ''">
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null and os != ''">
+        os = #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
