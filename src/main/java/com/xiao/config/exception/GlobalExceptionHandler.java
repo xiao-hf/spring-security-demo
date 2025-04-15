@@ -32,14 +32,12 @@ public class GlobalExceptionHandler {
     // 业务异常
     @ExceptionHandler(BusinessException.class)
     public AjaxResult<String> handleBusinessException(BusinessException exception) {
-        log.error("业务异常：{}", exception.getMessage(), exception);
         return AjaxResult.error(exception.getMessage());
     }
 
     // 校验异常
     @ExceptionHandler(BindException.class)
     public AjaxResult<String> handleBindException(BindException e) {
-        log.error("参数绑定异常：{}", e.getMessage(), e);
         String message = e.getAllErrors().get(0).getDefaultMessage();
         return AjaxResult.error(message);
     }
@@ -47,7 +45,6 @@ public class GlobalExceptionHandler {
     // 参数校验异常（@Valid注解）
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public AjaxResult<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        log.error("参数校验异常：{}", e.getMessage(), e);
         String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         return AjaxResult.error(message);
     }
