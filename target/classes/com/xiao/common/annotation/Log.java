@@ -11,31 +11,36 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Log {
-    
+
     /**
      * 模块名称
      */
     String module() default "";
-    
+
     /**
      * 操作类型
      */
     OperationType type() default OperationType.OTHER;
-    
+
     /**
      * 日志内容，支持SpEL表达式
      */
     String description() default "";
-    
+
     /**
      * 是否保存请求参数
      */
     boolean saveParams() default true;
-    
+
     /**
      * 是否保存响应结果
      */
     boolean saveResult() default false;
+
+    /**
+     * 登录类型，仅当操作类型为LOGIN时有效
+     */
+    LoginType loginType() default LoginType.PASSWORD;
 
     /**
      * 操作类型枚举
@@ -169,21 +174,11 @@ public @interface Log {
 
         /**
          * 操作代码
-         * -- GETTER --
-         *  获取操作代码
-         *
-         * @return 操作代码
-
          */
         private final String code;
 
         /**
          * 操作描述
-         * -- GETTER --
-         *  获取操作描述
-         *
-         * @return 操作描述
-
          */
         private final String description;
 
@@ -213,6 +208,100 @@ public @interface Log {
                 }
             }
             return OTHER;
+        }
+
+        @Override
+        public String toString() {
+            return this.description;
+        }
+    }
+
+    /**
+     * 登录类型枚举
+     */
+    @Getter
+    enum LoginType {
+        /**
+         * 密码登录
+         */
+        PASSWORD("PASSWORD", "密码登录"),
+
+        /**
+         * 验证码登录
+         */
+        CODE("CODE", "验证码登录"),
+
+        /**
+         * 单点登录
+         */
+        SSO("SSO", "单点登录"),
+
+        /**
+         * 第三方登录
+         */
+        THIRD_PARTY("THIRD_PARTY", "第三方登录"),
+
+        /**
+         * 二维码登录
+         */
+        QR_CODE("QR_CODE", "二维码登录"),
+
+        /**
+         * 人脸识别登录
+         */
+        FACE("FACE", "人脸识别登录"),
+
+        /**
+         * 指纹登录
+         */
+        FINGERPRINT("FINGERPRINT", "指纹登录"),
+
+        /**
+         * 自动登录
+         */
+        AUTO("AUTO", "自动登录"),
+
+        /**
+         * 其他登录方式
+         */
+        OTHER("OTHER", "其他方式");
+
+        /**
+         * 登录类型代码
+         */
+        private final String code;
+
+        /**
+         * 登录类型描述
+         */
+        private final String description;
+
+        /**
+         * 构造方法
+         *
+         * @param code 登录类型代码
+         * @param description 登录类型描述
+         */
+        LoginType(String code, String description) {
+            this.code = code;
+            this.description = description;
+        }
+
+        /**
+         * 根据代码获取登录类型
+         *
+         * @param code 登录类型代码
+         * @return 登录类型枚举实例，如果未找到匹配的代码则返回PASSWORD
+         */
+        public static LoginType getByCode(String code) {
+            if (code != null) {
+                for (LoginType type : values()) {
+                    if (type.getCode().equals(code)) {
+                        return type;
+                    }
+                }
+            }
+            return PASSWORD;
         }
 
         @Override

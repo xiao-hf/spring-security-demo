@@ -45,12 +45,14 @@ public class UserController {
 
     @Operation(summary = "登录")
     @PostMapping("/login")
+    @Log(module = "登录")
     public AjaxResult<String> login(@RequestBody @Valid ReqLogin req) {
         return userService.login(req);
     }
 
     @Operation(summary = "登出")
     @PostMapping("/logout")
+    @Log(module = "登出")
     public AjaxResult<String> logout() {
         return userService.logout();
     }

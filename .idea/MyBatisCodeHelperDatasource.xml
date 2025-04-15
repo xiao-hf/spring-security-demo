@@ -1348,6 +1348,176 @@
                 </TableGenerateConfig>
               </value>
             </entry>
+            <entry key="spring_security_demo:sys_login_log">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="username" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="ip" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="browser" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="os" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="device_type" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="status" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="msg" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="login_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="login_type" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_agent" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="login_module" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="SysLoginLog" />
+                  <option name="moduleName" value="spring-security-demo" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="spring_security_demo:sys_operation_log">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="batchInsertSelectiveUseDefaultForNull" value="true" />
+                  <option name="columnOverrideList">
+                    <list>
+                      <MyColumnOverride>
+                        <option name="columnName" value="id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="module" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="operation_type" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="description" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="method" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="request_url" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="request_method" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="request_params" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="response_result" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="status" />
+                        <option name="javaType" value="java.lang.Integer" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="error_msg" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="user_id" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="username" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="ip" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="browser" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="os" />
+                        <option name="javaType" value="java.lang.String" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="time" />
+                        <option name="javaType" value="java.lang.Long" />
+                      </MyColumnOverride>
+                      <MyColumnOverride>
+                        <option name="columnName" value="create_time" />
+                        <option name="javaType" value="java.util.Date" />
+                      </MyColumnOverride>
+                    </list>
+                  </option>
+                  <option name="generatedKey" value="id" />
+                  <option name="insertOnDuplicateKey" value="true" />
+                  <option name="javaModelName" value="SysOperationLog" />
+                  <option name="moduleName" value="spring-security-demo" />
+                  <option name="mybatisplusIdType" value="AUTO" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="updateBatch" value="true" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
             <entry key="spring_security_demo:user">
               <value>
                 <TableGenerateConfig>
