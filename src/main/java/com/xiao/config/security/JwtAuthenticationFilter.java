@@ -46,7 +46,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Resource
     RedisUtil redisUtil;
 
-    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         // 1.放行不拦截的请求
@@ -57,30 +56,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             // 2.排除非法请求
             String authorization = request.getHeader("Authorization");
-            if (StringUtils.isEmpty(authorization)) {
-                handleAuthenticationFailure(response, "Authorization未携带, 非法请求!");
-                return;
-            }
+            if (StringUtils.isEmpty(authorization))
+                throw new BusinessException("Authorization未携带, 非法请求!");
             if (authorization.startsWith("Bearer ")) {
                 authorization = authorization.substring(7);
             }
 
             // 2.解析校验token
-            UserDto userDto = JwtUtil.parseAuth(authorization);
-            assert userDto != null;
-            String token = userDto.getToken();
+            UserDto user = JwtUtil.parseAuth(authorization);
+            if (user == null) {
+                throw new BusinessException("登录过期, 请重新登陆!");
+            }
+            String token = user.getToken();
             String key = RedisPrefix.LOGIN_TOKEN + token;
-            userDto = (UserDto) redisUtil.get(key);
-
-            if (userDto == null)
-                throw new BusinessException("用户已过期, 请重新登录!");
+            if (!redisUtil.contains(key))
+                throw new BusinessException("登录过期, 请重新登陆!");
+            user = (UserDto) redisUtil.get(key);
 
             Collection<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + userDto.getRoleDto().getRoleCode()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRoleDto().getRoleCode()));
 
             // 3.设置认证信息
             UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(userDto, null, authorities);
+                    new UsernamePasswordAuthenticationToken(user, null, authorities);
 
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -88,7 +86,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             logger.error("设置认证信息异常: {}", e);
             SecurityContextHolder.clearContext();
-            return;
         }
         // 3.放行
         filterChain.doFilter(request, response);

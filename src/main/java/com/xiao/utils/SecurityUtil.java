@@ -42,7 +42,13 @@ public class SecurityUtil {
      */
     public static UserDto getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDto) authentication.getPrincipal();
+        UserDto user;
+        try {
+            user = (UserDto) authentication.getPrincipal();
+        } catch (Exception e) {
+            throw new BusinessException("登录过期, 请重新登陆!");
+        }
+        return user;
     }
 
     // 获取token

@@ -2,7 +2,6 @@ package com.xiao.controller;
 
 import com.xiao.common.AjaxResult;
 import com.xiao.common.dto.UserDto;
-import com.xiao.exception.BusinessException;
 import com.xiao.http.req.ReqLogin;
 import com.xiao.service.UserService;
 import com.xiao.utils.SecurityUtil;
