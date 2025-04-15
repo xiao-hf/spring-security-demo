@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 14/04/2025 17:19:42
+ Date: 15/04/2025 14:03:20
 */
 
 SET NAMES utf8mb4;
@@ -79,6 +79,44 @@ CREATE TABLE `role_permission`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for sys_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_log`;
+CREATE TABLE `sys_log`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+  `module` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模块名称',
+  `operation_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作类型',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作描述',
+  `method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求方法',
+  `request_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求URL',
+  `request_method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求方式',
+  `request_params` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '请求参数',
+  `response_result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '返回结果',
+  `status` tinyint NULL DEFAULT NULL COMMENT '操作状态（0失败 1成功）',
+  `error_msg` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '错误消息',
+  `operation_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
+  `user_id` bigint NULL DEFAULT NULL COMMENT '操作用户ID',
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作用户名',
+  `ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作用户IP',
+  `browser` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '浏览器类型',
+  `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作系统',
+  `time` bigint NULL DEFAULT NULL COMMENT '执行时长(毫秒)',
+  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_user_id`(`user_id` ASC) USING BTREE,
+  INDEX `idx_operation_time`(`operation_time` ASC) USING BTREE,
+  INDEX `idx_status`(`status` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统操作日志' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_log
+-- ----------------------------
+INSERT INTO `sys_log` VALUES (1, '测试', 'OTHER', '', 'com.xiao.controller.UserController.admin()', '/user/admin', 'GET', NULL, '{\"success\":true,\"code\":\"200\",\"message\":\"\",\"data\":\"ADMIN认证成功!\",\"timestamp\":1744695650178}', 1, NULL, '2025-04-15 13:40:50', 1, '1', '127.0.0.1', 'Chrome', 'Windows', 0, NULL);
+INSERT INTO `sys_log` VALUES (2, '测试', 'OTHER', '', 'com.xiao.controller.UserController.admin()', '/user/admin', 'GET', NULL, '{\"success\":true,\"code\":\"200\",\"message\":\"\",\"data\":\"ADMIN认证成功!\",\"timestamp\":1744695650745}', 1, NULL, '2025-04-15 13:40:51', 1, '1', '127.0.0.1', 'Chrome', 'Windows', 0, NULL);
+INSERT INTO `sys_log` VALUES (3, '测试', 'OTHER', '', 'com.xiao.controller.UserController.admin()', '/user/admin', 'GET', NULL, '{\"success\":true,\"code\":\"200\",\"message\":\"\",\"data\":\"ADMIN认证成功!\",\"timestamp\":1744696344283}', 1, NULL, '2025-04-15 13:52:24', 1, '1', '127.0.0.1', 'Chrome', 'Windows', 0, NULL);
+INSERT INTO `sys_log` VALUES (4, '测试', 'OTHER', '', 'com.xiao.controller.UserController.admin()', '/user/admin/1', 'GET', '{\"id\":\"1\"}', '{\"success\":true,\"code\":\"200\",\"message\":\"\",\"data\":\"ADMIN认证成功!\",\"timestamp\":1744696634201}', 1, NULL, '2025-04-15 13:57:14', 1, '1', '127.0.0.1', 'Chrome', 'Windows', 0, '2025-04-15 13:57:14');
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -111,7 +149,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, '1', '1', '1', '1', 1, '1', '1', 1, '15286610576', '1', '1', b'1', '1970-01-03 00:00:00', '2025-04-11 14:44:41', '2025-04-14 15:38:49', b'0', '916b19d4-7247-4d0d-8704-d49261c6eb02');
+INSERT INTO `user` VALUES (1, '1', '1', '1', '1', 1, '1', '1', 1, '15286610576', '1', '1', b'1', '1970-01-03 00:00:00', '2025-04-11 14:44:41', '2025-04-15 13:32:09', b'0', '02db98d4-8bfd-46c7-a988-f543c7ab5482');
 INSERT INTO `user` VALUES (2, '323', '1', '23', '1', 1, '1', '1', 1, '15286610576', '1', '1', b'0', '1970-01-03 00:00:00', '2025-04-11 16:13:25', '1970-01-02 00:00:00', b'1', NULL);
 
 -- ----------------------------
