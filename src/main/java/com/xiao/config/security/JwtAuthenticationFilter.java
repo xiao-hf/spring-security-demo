@@ -2,7 +2,6 @@ package com.xiao.config.security;
 
 import java.io.IOException;
 import java.util.*;
-
 import cn.hutool.core.text.AntPathMatcher;
 import com.alibaba.druid.util.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +15,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,6 +25,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -33,8 +33,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     // 不需要进行JWT认证的路径
     private static final Set<String> excludedPaths = new HashSet<>(Arrays.asList("/doc.html",
-            "/user/getCaptcha/**",
-            "/user/login/**",
+            "/user/getCaptcha/**", //获取验证码
+            "/user/login/**", //登录
+
             "/doc.html**",
             "/swagger-ui.html",
             "/swagger-ui/**",
@@ -46,8 +47,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Resource
     RedisUtil redisUtil;
 
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+            throws IOException, ServletException {
         // 1.放行不拦截的请求
         if (shouldSkipAuthentication(request)) {
             filterChain.doFilter(request, response);
@@ -56,21 +58,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             // 2.排除非法请求
             String authorization = request.getHeader("Authorization");
-            if (StringUtils.isEmpty(authorization))
-                throw new BusinessException("Authorization未携带, 非法请求!");
-            if (authorization.startsWith("Bearer ")) {
-                authorization = authorization.substring(7);
+            if (StringUtils.isEmpty(authorization)) {
+                log.info("Authorization未携带");
+                handleAuthenticationFailure(response, "请先登录!");
+                return;
             }
+            if (authorization.startsWith("Bearer "))
+                authorization = authorization.substring(7);
 
             // 2.解析校验token
             UserDto user = JwtUtil.parseAuth(authorization);
             if (user == null) {
-                throw new BusinessException("登录过期, 请重新登陆!");
+                log.info("Authorization不合法 值:{}", authorization);
+                handleAuthenticationFailure(response, "请先登录!");
+                return;
             }
             String token = user.getToken();
             String key = RedisPrefix.LOGIN_TOKEN + token;
-            if (!redisUtil.contains(key))
-                throw new BusinessException("登录过期, 请重新登陆!");
+            if (!redisUtil.contains(key)) {
+                handleAuthenticationFailure(response, "登录过期, 请重新登录!");
+                return;
+            }
             user = (UserDto) redisUtil.get(key);
 
             Collection<GrantedAuthority> authorities = new ArrayList<>();
@@ -83,12 +91,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
+            // 3.放行
+            filterChain.doFilter(request, response);
+        } catch (BusinessException e) {
+            // 处理业务异常
+            handleAuthenticationFailure(response, e.getMessage());
         } catch (Exception e) {
-            logger.error("设置认证信息异常: {}", e);
-            SecurityContextHolder.clearContext();
+            // 处理其他异常
+            handleAuthenticationFailure(response, "认证过程发生错误: " + e.getMessage());
         }
-        // 3.放行
-        filterChain.doFilter(request, response);
     }
 
     /**

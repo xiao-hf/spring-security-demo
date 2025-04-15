@@ -4,13 +4,13 @@ import com.xiao.common.AjaxResult;
 import com.xiao.exception.BusinessException;
 import com.xiao.utils.RequestUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.experimental.StandardException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -24,6 +24,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
@@ -35,17 +36,33 @@ public class GlobalExceptionHandler {
         return AjaxResult.error(exception.getMessage());
     }
 
-    // 校验异常
+    // 校验异常 - 返回所有错误
     @ExceptionHandler(BindException.class)
     public AjaxResult<String> handleBindException(BindException e) {
-        String message = e.getAllErrors().get(0).getDefaultMessage();
+        // 获取所有字段错误并格式化
+        String message = e.getBindingResult().getFieldErrors().stream()
+                .map(error -> error.getField() + error.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+
+        // 如果没有字段错误，返回全局错误
+        if (message.isEmpty() && !e.getAllErrors().isEmpty()) {
+            message = e.getAllErrors().get(0).getDefaultMessage();
+        }
+
         return AjaxResult.error(message);
     }
 
     // 参数校验异常（@Valid注解）
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public AjaxResult<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        // 获取第一个错误字段
+        FieldError fieldError = e.getBindingResult().getFieldError();
+
+        // 构建包含参数名的错误消息
+        String message = fieldError != null
+                ? fieldError.getField() + fieldError.getDefaultMessage()
+                : e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+
         return AjaxResult.error(message);
     }
 

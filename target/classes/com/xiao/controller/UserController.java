@@ -19,6 +19,12 @@ public class UserController {
     @Resource
     UserService userService;
 
+    @GetMapping("/test")
+    @Log(module = "测试", type = Log.OperationType.OTHER, saveParams = true, saveResult = true)
+    public AjaxResult<String> test() {
+        return AjaxResult.success("成功访问!");
+    }
+
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     @Log(module = "测试", type = Log.OperationType.OTHER, saveParams = true, saveResult = true)

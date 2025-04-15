@@ -1,5 +1,6 @@
 package com.xiao.config.aspect;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.druid.util.StringUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -110,10 +111,11 @@ public class LogAspect {
     private boolean isLoginOperation(Log logAnnotation) {
         // 根据模块名称或操作类型判断
         String module = logAnnotation.module();
+        String description = logAnnotation.description();
         String operationType = logAnnotation.type().name();
 
-        return !StringUtils.isEmpty(module) &&
-                (module.contains("登录") || module.contains("登出")) ||
+        return (!StrUtil.isEmpty(module) && (module.contains("登录") || module.contains("登出"))) ||
+                (!StrUtil.isEmpty(description) && (description.contains("登录") || description.contains("登出"))) ||
                 operationType.equals("LOGIN") || operationType.equals("LOGOUT");
     }
 
