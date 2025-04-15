@@ -2,6 +2,9 @@ package com.xiao.config.exception;
 
 import com.xiao.common.AjaxResult;
 import com.xiao.exception.BusinessException;
+import com.xiao.utils.RequestUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.experimental.StandardException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -167,5 +171,23 @@ public class GlobalExceptionHandler {
     public AjaxResult<String> handleException(Exception e) {
         log.error("未知异常：", e);
         return AjaxResult.error("系统内部错误，请联系管理员");
+    }
+
+    /**
+     * 处理请求路径不存在的异常
+     */
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public AjaxResult<String> handleNoHandlerFoundException(NoHandlerFoundException e, HttpServletRequest request) {
+        log.error("请求地址不存在: {}, 请求方式: {}", e.getRequestURL(), e.getHttpMethod());
+
+        String errorMessage = "请求地址不存在: " + e.getRequestURL();
+
+        // 记录请求信息
+        log.info("请求路径: {}, 请求IP: {}, 请求方法: {}",
+                request.getRequestURI(),
+                RequestUtil.getIpAddress(request),
+                request.getMethod());
+
+        return AjaxResult.error("404", errorMessage);
     }
 }

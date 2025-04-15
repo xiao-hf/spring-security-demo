@@ -18,6 +18,8 @@ import com.xiao.utils.MyUtil;
 import com.xiao.utils.RedisUtil;
 import com.xiao.utils.SecurityUtil;
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     UserMapper userMapper;
 
@@ -53,7 +56,11 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException("用户不存在!");
         String code = MyUtil.randomNumStr(6);
         redisUtil.set(RedisPrefix.LOGIN_CODE + phone, code,5, TimeUnit.MINUTES);
-        return AjaxResult.success(code);
+
+        // todo 发送验证码手机短信...
+
+        log.info("手机号 {} 用户 验证码:{}", phone, code);
+        return AjaxResult.success("验证码已生成, 有效期5分钟!");
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.xiao.common.dto.UserDto;
 import com.xiao.dao.dto.SysLog;
 import com.xiao.dao.inter.SysLogMapper;
 import com.xiao.service.LogService;
+import com.xiao.utils.RequestUtil;
 import com.xiao.utils.SecurityUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -133,15 +134,9 @@ public class LogAspect {
         if (request != null) {
             sysLog.setRequestUrl(request.getRequestURI());
             sysLog.setRequestMethod(request.getMethod());
-            sysLog.setIp(getIpAddress(request));
-            
-            // 可以添加获取浏览器和操作系统信息的方法
-            String userAgent = request.getHeader("User-Agent");
-            if (userAgent != null) {
-                sysLog.setBrowser(getBrowserName(userAgent));
-                sysLog.setOs(getOperatingSystem(userAgent));
-            }
-            
+            sysLog.setIp(RequestUtil.getIpAddress(request));
+            sysLog.setBrowser(RequestUtil.getBrowserName(request));
+            sysLog.setOs(RequestUtil.getOperatingSystem(request));
         }
         
         // 处理请求参数
@@ -242,80 +237,6 @@ public class LogAspect {
         } catch (Exception e) {
             log.error("解析表达式[{}]失败: {}", expression, e.getMessage());
             return expression;
-        }
-    }
-    
-    /**
-     * 获取客户端IP地址
-     */
-    private String getIpAddress(HttpServletRequest request) {
-        String ip = request.getHeader("X-Forwarded-For");
-        
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        
-        // 对于通过多个代理的情况，第一个IP为客户端真实IP
-        if (ip != null && ip.contains(",")) {
-            ip = ip.split(",")[0].trim();
-        }
-        
-        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
-    }
-    
-    /**
-     * 获取浏览器名称
-     */
-    private String getBrowserName(String userAgent) {
-        if (userAgent == null) return "未知";
-        
-        if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
-            return "Internet Explorer";
-        } else if (userAgent.contains("Firefox")) {
-            return "Firefox";
-        } else if (userAgent.contains("Chrome") && !userAgent.contains("Edg")) {
-            return "Chrome";
-        } else if (userAgent.contains("Safari") && !userAgent.contains("Chrome")) {
-            return "Safari";
-        } else if (userAgent.contains("Edg")) {
-            return "Microsoft Edge";
-        } else if (userAgent.contains("Opera") || userAgent.contains("OPR")) {
-            return "Opera";
-        } else {
-            return "其他浏览器";
-        }
-    }
-    
-    /**
-     * 获取操作系统
-     */
-    private String getOperatingSystem(String userAgent) {
-        if (userAgent == null) return "未知";
-        
-        if (userAgent.contains("Windows")) {
-            return "Windows";
-        } else if (userAgent.contains("Mac OS X")) {
-            return "macOS";
-        } else if (userAgent.contains("Linux")) {
-            return "Linux";
-        } else if (userAgent.contains("Android")) {
-            return "Android";
-        } else if (userAgent.contains("iPhone") || userAgent.contains("iPad")) {
-            return "iOS";
-        } else {
-            return "其他操作系统";
         }
     }
 }
