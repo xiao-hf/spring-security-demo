@@ -2,12 +2,9 @@ package com.xiao.utils;
 
 import com.xiao.common.dto.UserDto;
 import io.jsonwebtoken.*;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class JwtUtil {
 

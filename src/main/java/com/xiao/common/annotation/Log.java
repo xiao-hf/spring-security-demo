@@ -38,11 +38,6 @@ public @interface Log {
     boolean saveResult() default false;
 
     /**
-     * 登录类型，仅当操作类型为LOGIN时有效
-     */
-    LoginType loginType() default LoginType.PASSWORD;
-
-    /**
      * 操作类型枚举
      */
     @Getter
@@ -209,6 +204,70 @@ public @interface Log {
             }
             return OTHER;
         }
+        
+        /**
+         * 根据描述推断操作类型
+         *
+         * @param description 操作描述文本
+         * @return 操作类型枚举实例，如果未能推断则返回OTHER
+         */
+        public static OperationType inferFromDescription(String description) {
+            if (description == null || description.isEmpty()) {
+                return OTHER;
+            }
+            
+            // 按照可能性高低排序检查关键词
+            if (description.contains("查询") || description.contains("获取") || description.contains("搜索") || 
+                description.contains("检索") || description.contains("列表")) {
+                return QUERY;
+            } else if (description.contains("新增") || description.contains("添加") || description.contains("创建")) {
+                return INSERT;
+            } else if (description.contains("修改") || description.contains("更新") || description.contains("编辑")) {
+                return UPDATE;
+            } else if (description.contains("删除") || description.contains("移除") || description.contains("清除")) {
+                return DELETE;
+            } else if (description.contains("授权") || description.contains("分配权限")) {
+                return GRANT;
+            } else if (description.contains("导出")) {
+                return EXPORT;
+            } else if (description.contains("导入")) {
+                return IMPORT;
+            } else if (description.contains("登录")) {
+                return LOGIN;
+            } else if (description.contains("登出") || description.contains("退出")) {
+                return LOGOUT;
+            } else if (description.contains("强制退出")) {
+                return FORCE_LOGOUT;
+            } else if (description.contains("生成代码") || description.contains("代码生成")) {
+                return GENERATE;
+            } else if (description.contains("清空数据")) {
+                return CLEAN;
+            } else if (description.contains("审核") || description.contains("审批")) {
+                return APPROVE;
+            } else if (description.contains("驳回") || description.contains("拒绝")) {
+                return REJECT;
+            } else if (description.contains("下载")) {
+                return DOWNLOAD;
+            } else if (description.contains("上传")) {
+                return UPLOAD;
+            } else if (description.contains("备份")) {
+                return BACKUP;
+            } else if (description.contains("恢复")) {
+                return RESTORE;
+            } else if (description.contains("重置密码")) {
+                return RESET_PASSWORD;
+            } else if (description.contains("修改密码") || description.contains("更改密码")) {
+                return CHANGE_PASSWORD;
+            } else if (description.contains("修改状态") || description.contains("更改状态")) {
+                return CHANGE_STATUS;
+            } else if (description.contains("分配角色")) {
+                return ASSIGN_ROLE;
+            } else if (description.contains("配置")) {
+                return CONFIG;
+            }
+            
+            return OTHER;
+        }
 
         @Override
         public String toString() {
@@ -301,6 +360,39 @@ public @interface Log {
                     }
                 }
             }
+            return PASSWORD;
+        }
+        
+        /**
+         * 根据描述推断登录类型
+         *
+         * @param description 登录描述文本
+         * @return 登录类型枚举实例，如果未能推断则返回PASSWORD
+         */
+        public static LoginType inferFromDescription(String description) {
+            if (description == null || description.isEmpty()) {
+                return PASSWORD;
+            }
+            
+            if (description.contains("验证码") || description.contains("短信") || description.contains("code")) {
+                return CODE;
+            } else if (description.contains("单点") || description.contains("SSO") || description.contains("sso")) {
+                return SSO;
+            } else if (description.contains("第三方") || description.contains("微信") || 
+                      description.contains("QQ") || description.contains("微博")) {
+                return THIRD_PARTY;
+            } else if (description.contains("二维码") || description.contains("QR") || description.contains("扫码")) {
+                return QR_CODE;
+            } else if (description.contains("人脸") || description.contains("face")) {
+                return FACE;
+            } else if (description.contains("指纹") || description.contains("fingerprint")) {
+                return FINGERPRINT;
+            } else if (description.contains("自动") || description.contains("auto")) {
+                return AUTO;
+            } else if (description.contains("密码") || description.contains("password")) {
+                return PASSWORD;
+            }
+            
             return PASSWORD;
         }
 

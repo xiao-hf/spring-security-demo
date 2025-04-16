@@ -8,14 +8,19 @@ import com.xiao.common.annotation.Log;
 import com.xiao.common.dto.UserDto;
 import com.xiao.dao.dto.SysLoginLog;
 import com.xiao.dao.dto.SysOperationLog;
+import com.xiao.http.req.ReqLogin;
 import com.xiao.service.LogService;
 import com.xiao.utils.RequestUtil;
 import com.xiao.utils.SecurityUtil;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
@@ -26,8 +31,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashMap;
@@ -100,7 +103,7 @@ public class LogAspect {
             if (isLoginOperation(logAnnotation)) {
                 handleLoginLog(joinPoint, request, user, exception, now, logAnnotation);
             } else {
-                handleOperationLog(joinPoint, request, user, result, exception, now, executionTime);
+                handleOperationLog(joinPoint, request, user, result, exception, executionTime);
             }
         }
     }
@@ -115,7 +118,7 @@ public class LogAspect {
         String operationType = logAnnotation.type().name();
 
         return (!StrUtil.isEmpty(module) && (module.contains("登录") || module.contains("登出"))) ||
-                (!StrUtil.isEmpty(description) && (description.contains("登录") || description.contains("登出"))) ||
+               (!StrUtil.isEmpty(description) && (description.contains("登录") || description.contains("登出"))) ||
                 operationType.equals("LOGIN") || operationType.equals("LOGOUT");
     }
 
@@ -181,7 +184,7 @@ public class LogAspect {
      * 处理操作日志
      */
     private void handleOperationLog(JoinPoint joinPoint, HttpServletRequest request, UserDto user,
-                                    Object result, Exception exception, Date operationTime, long executionTime) {
+                                    Object result, Exception exception, long executionTime) {
         try {
             // 创建操作日志实体
             SysOperationLog operationLog = new SysOperationLog();
@@ -272,6 +275,19 @@ public class LogAspect {
                 log.error("处理响应结果失败: {}", e.getMessage());
             }
         }
+
+        // 判断操作类型
+        if (!StrUtil.isEmpty(description)) {
+            // 使用Log.OperationType中的inferFromDescription方法推断操作类型
+            Log.OperationType inferredType = Log.OperationType.inferFromDescription(description);
+            if (inferredType != logAnnotation.type() && inferredType != Log.OperationType.OTHER) {
+                // 如果推断出的类型与注解中定义的不同，且不是OTHER类型，则使用推断的类型
+                operationLog.setOperationType(inferredType.getCode());
+            } else {
+                // 否则使用注解中定义的类型
+                operationLog.setOperationType(logAnnotation.type().getCode());
+            }
+        }
     }
 
     /**
@@ -341,7 +357,7 @@ public class LogAspect {
     private String determineLoginType(String methodName, Object[] args) {
         // 首先检查参数中是否有ReqLogin类型
         for (Object arg : args) {
-            if (arg instanceof com.xiao.http.req.ReqLogin reqLogin) {
+            if (arg instanceof ReqLogin reqLogin) {
                 String loginType = reqLogin.getType();
                 
                 // 根据type字段判断登录方式
@@ -353,17 +369,18 @@ public class LogAspect {
             }
         }
         
-        // 如果没有找到ReqLogin参数或者type为空，则按原来的逻辑继续判断
-        if (methodName.contains("sso") || methodName.contains("Sso")) {
-            return Log.LoginType.SSO.name();
-        } else if (methodName.contains("Code") || methodName.contains("code")
-                || methodName.contains("Captcha") || methodName.contains("captcha")) {
-            return Log.LoginType.CODE.name();
-        } else if (methodName.contains("logout") || methodName.contains("Logout")) {
-            return "LOGOUT";
-        } else {
-            return Log.LoginType.PASSWORD.name();
+        // 如果没有找到ReqLogin参数或者type为空，则尝试从方法名推断
+        Log.LoginType inferredType = Log.LoginType.inferFromDescription(methodName);
+        if (inferredType != Log.LoginType.PASSWORD && inferredType != Log.LoginType.OTHER) {
+            return inferredType.name();
         }
+        
+        // 使用原来的逻辑作为备用
+        if (methodName.contains("logout") || methodName.contains("Logout")) {
+            return "LOGOUT";
+        }
+        
+        return Log.LoginType.PASSWORD.name();
     }
 
     /**

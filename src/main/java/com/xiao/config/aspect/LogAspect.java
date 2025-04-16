@@ -8,7 +8,6 @@ import com.xiao.common.annotation.Log;
 import com.xiao.common.dto.UserDto;
 import com.xiao.dao.dto.SysLoginLog;
 import com.xiao.dao.dto.SysOperationLog;
-import com.xiao.dao.dto.User;
 import com.xiao.http.req.ReqLogin;
 import com.xiao.service.LogService;
 import com.xiao.utils.RequestUtil;
@@ -104,7 +103,7 @@ public class LogAspect {
             if (isLoginOperation(logAnnotation)) {
                 handleLoginLog(joinPoint, request, user, exception, now, logAnnotation);
             } else {
-                handleOperationLog(joinPoint, request, user, result, exception, executionTime, logAnnotation);
+                handleOperationLog(joinPoint, request, user, result, exception, executionTime);
             }
         }
     }
@@ -185,13 +184,11 @@ public class LogAspect {
      * 处理操作日志
      */
     private void handleOperationLog(JoinPoint joinPoint, HttpServletRequest request, UserDto user,
-                                    Object result, Exception exception, long executionTime, Log logAnnotation) {
+                                    Object result, Exception exception, long executionTime) {
         try {
             // 创建操作日志实体
             SysOperationLog operationLog = new SysOperationLog();
             operationLog.setTime(executionTime);
-
-            operationLog.setOperationType(inferOperationTypeFromDescription(logAnnotation.description()).getCode());
 
             // 设置用户信息
             if (user != null) {
@@ -213,68 +210,6 @@ public class LogAspect {
         } catch (Exception e) {
             log.error("记录操作日志失败: {}", e.getMessage());
         }
-    }
-
-    /**
-     * 从描述中推断操作类型
-     */
-    private Log.OperationType inferOperationTypeFromDescription(String description) {
-        if (StrUtil.isEmpty(description)) {
-            return Log.OperationType.OTHER;
-        }
-
-        // 按照可能性高低排序检查关键词
-        if (description.contains("查询") || description.contains("获取") || description.contains("搜索") ||
-                description.contains("检索") || description.contains("列表")) {
-            return Log.OperationType.QUERY;
-        } else if (description.contains("新增") || description.contains("添加") || description.contains("创建")) {
-            return Log.OperationType.INSERT;
-        } else if (description.contains("修改") || description.contains("更新") || description.contains("编辑")) {
-            return Log.OperationType.UPDATE;
-        } else if (description.contains("删除") || description.contains("移除") || description.contains("清除")) {
-            return Log.OperationType.DELETE;
-        } else if (description.contains("授权") || description.contains("分配权限")) {
-            return Log.OperationType.GRANT;
-        } else if (description.contains("导出")) {
-            return Log.OperationType.EXPORT;
-        } else if (description.contains("导入")) {
-            return Log.OperationType.IMPORT;
-        } else if (description.contains("登录")) {
-            return Log.OperationType.LOGIN;
-        } else if (description.contains("登出") || description.contains("退出")) {
-            return Log.OperationType.LOGOUT;
-        } else if (description.contains("强制退出")) {
-            return Log.OperationType.FORCE_LOGOUT;
-        } else if (description.contains("生成代码") || description.contains("代码生成")) {
-            return Log.OperationType.GENERATE;
-        } else if (description.contains("清空数据")) {
-            return Log.OperationType.CLEAN;
-        } else if (description.contains("审核") || description.contains("审批")) {
-            return Log.OperationType.APPROVE;
-        } else if (description.contains("驳回") || description.contains("拒绝")) {
-            return Log.OperationType.REJECT;
-        } else if (description.contains("下载")) {
-            return Log.OperationType.DOWNLOAD;
-        } else if (description.contains("上传")) {
-            return Log.OperationType.UPLOAD;
-        } else if (description.contains("备份")) {
-            return Log.OperationType.BACKUP;
-        } else if (description.contains("恢复")) {
-            return Log.OperationType.RESTORE;
-        } else if (description.contains("重置密码")) {
-            return Log.OperationType.RESET_PASSWORD;
-        } else if (description.contains("修改密码") || description.contains("更改密码")) {
-            return Log.OperationType.CHANGE_PASSWORD;
-        } else if (description.contains("修改状态") || description.contains("更改状态")) {
-            return Log.OperationType.CHANGE_STATUS;
-        } else if (description.contains("分配角色")) {
-            return Log.OperationType.ASSIGN_ROLE;
-        } else if (description.contains("配置")) {
-            return Log.OperationType.CONFIG;
-        }
-
-        // 默认返回其他操作类型
-        return Log.OperationType.OTHER;
     }
 
     /**
@@ -338,6 +273,19 @@ public class LogAspect {
                 operationLog.setResponseResult(resultJson);
             } catch (JsonProcessingException e) {
                 log.error("处理响应结果失败: {}", e.getMessage());
+            }
+        }
+
+        // 判断操作类型
+        if (!StrUtil.isEmpty(description)) {
+            // 使用Log.OperationType中的inferFromDescription方法推断操作类型
+            Log.OperationType inferredType = Log.OperationType.inferFromDescription(description);
+            if (inferredType != logAnnotation.type() && inferredType != Log.OperationType.OTHER) {
+                // 如果推断出的类型与注解中定义的不同，且不是OTHER类型，则使用推断的类型
+                operationLog.setOperationType(inferredType.getCode());
+            } else {
+                // 否则使用注解中定义的类型
+                operationLog.setOperationType(logAnnotation.type().getCode());
             }
         }
     }
@@ -421,17 +369,18 @@ public class LogAspect {
             }
         }
         
-        // 如果没有找到ReqLogin参数或者type为空，则按原来的逻辑继续判断
-        if (methodName.contains("sso") || methodName.contains("Sso")) {
-            return Log.LoginType.SSO.name();
-        } else if (methodName.contains("Code") || methodName.contains("code")
-                || methodName.contains("Captcha") || methodName.contains("captcha")) {
-            return Log.LoginType.CODE.name();
-        } else if (methodName.contains("logout") || methodName.contains("Logout")) {
-            return "LOGOUT";
-        } else {
-            return Log.LoginType.PASSWORD.name();
+        // 如果没有找到ReqLogin参数或者type为空，则尝试从方法名推断
+        Log.LoginType inferredType = Log.LoginType.inferFromDescription(methodName);
+        if (inferredType != Log.LoginType.PASSWORD && inferredType != Log.LoginType.OTHER) {
+            return inferredType.name();
         }
+        
+        // 使用原来的逻辑作为备用
+        if (methodName.contains("logout") || methodName.contains("Logout")) {
+            return "LOGOUT";
+        }
+        
+        return Log.LoginType.PASSWORD.name();
     }
 
     /**
