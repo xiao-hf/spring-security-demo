@@ -97,7 +97,7 @@ public class GlobalExceptionHandler {
     // 非法参数异常
     @ExceptionHandler(IllegalArgumentException.class)
     public AjaxResult<String> handleIllegalArgumentException(IllegalArgumentException e) {
-        log.error("非法参数异常：{}", e.getMessage(), e);
+        log.error("非法参数异常：{}", e.getMessage());
         return AjaxResult.error("非法的参数: " + e.getMessage());
     }
 

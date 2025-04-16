@@ -111,10 +111,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         response.setCharacterEncoding("UTF-8");
 
         Map<String, Object> body = new HashMap<>();
-        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-        body.put("error", "Unauthorized");
+        body.put("success", false);
+        body.put("code", "302");  // 使用认证失败的错误码
         body.put("message", message);
-        body.put("timestamp", new Date());
+        body.put("data", null);
+        body.put("timestamp", System.currentTimeMillis());
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);
