@@ -12,6 +12,7 @@ import com.xiao.utils.JwtUtil;
 import com.xiao.utils.RedisUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -48,14 +49,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws IOException {
+            throws IOException, ServletException {
+        // 1.放行不拦截的请求
+        if (shouldSkipAuthentication(request)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         try {
-            // 1.放行不拦截的请求
-            if (shouldSkipAuthentication(request)) {
-                filterChain.doFilter(request, response);
-                return;
-            }
-
             // 2.排除非法请求
             String authorization = request.getHeader("Authorization");
             if (StringUtils.isEmpty(authorization)) {
@@ -111,10 +111,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         response.setCharacterEncoding("UTF-8");
 
         Map<String, Object> body = new HashMap<>();
-        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-        body.put("error", "Unauthorized");
+        body.put("success", false);
+        body.put("code", "302");  // 使用认证失败的错误码
         body.put("message", message);
-        body.put("timestamp", new Date());
+        body.put("data", null);
+        body.put("timestamp", System.currentTimeMillis());
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);
