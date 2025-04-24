@@ -12,7 +12,7 @@ class SpringSecurityDemoApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println(userMapper.selectByPhoneAndIsDeleted("15286610576", true));
+        System.out.println(String.format("%s %d", "sdfjlksdf", 13984));
     }
 
 }

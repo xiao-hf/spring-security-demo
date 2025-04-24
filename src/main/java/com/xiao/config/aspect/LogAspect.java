@@ -113,13 +113,8 @@ public class LogAspect {
      */
     private boolean isLoginOperation(Log logAnnotation) {
         // 根据模块名称或操作类型判断
-        String module = logAnnotation.module();
         String description = logAnnotation.description();
-        String operationType = logAnnotation.type().name();
-
-        return (!StrUtil.isEmpty(module) && (module.contains("登录") || module.contains("登出"))) ||
-               (!StrUtil.isEmpty(description) && (description.contains("登录") || description.contains("登出"))) ||
-                operationType.equals("LOGIN") || operationType.equals("LOGOUT");
+        return (!StrUtil.isEmpty(description) && (description.contains("登录") || description.contains("登出")));
     }
 
     /**
@@ -128,7 +123,7 @@ public class LogAspect {
     private void handleLoginLog(JoinPoint joinPoint, HttpServletRequest request, UserDto user,
                                 Exception exception, Date operationTime, Log logAnnotation) {
         try {
-            String module = logAnnotation.module();
+            String description = logAnnotation.description();
 
             // 获取注解信息
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -155,7 +150,7 @@ public class LogAspect {
             if (exception != null) {
                 loginLog.setMsg(exception.getMessage());
             } else {
-                loginLog.setMsg((!StringUtils.isEmpty(module) && module.contains("登录")) ? "登录成功" : "登出成功");
+                loginLog.setMsg((description.contains("登录") ? "登录" : "登出") + (loginLog.getStatus() == 1 ? "成功!" : "失败"));
             }
 
             // 设置登录类型

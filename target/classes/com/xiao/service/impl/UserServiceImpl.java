@@ -113,12 +113,14 @@ public class UserServiceImpl implements UserService {
         user.setToken(token);
         user.setLastLoginTime(now);
         userMapper.updateByPrimaryKeySelective(user);
-        // 4.生成token   authorization->token->UserDto
+        // 4.生成token  authorization->token->UserDto
         String authorization = JwtUtil.geneAuth(userDto);
         String key = RedisPrefix.LOGIN_TOKEN + token;
         redisUtil.set(key, userDto);
         // 5.设置UserDto到security上下文
         SecurityUtil.setUser(userDto);
+        // 6.清除验证码缓存
+        redisUtil.del(key);
         return AjaxResult.success(authorization);
     }
 

@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
         if (users.isEmpty())
             return AjaxResult.error("用户不存在!");
         User user = users.get(0);
+        String preToken = user.getToken();
         Long userId = user.getId();
         if (!user.getEnable())
             return AjaxResult.error("用户未启用!");
@@ -119,8 +120,9 @@ public class UserServiceImpl implements UserService {
         redisUtil.set(key, userDto);
         // 5.设置UserDto到security上下文
         SecurityUtil.setUser(userDto);
-        // 6.清除验证码缓存
+        // 6.清除验证码和之前登录缓存
         redisUtil.del(key);
+        redisUtil.del(RedisPrefix.LOGIN_TOKEN + preToken);
         return AjaxResult.success(authorization);
     }
 
